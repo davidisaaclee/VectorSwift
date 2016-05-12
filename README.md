@@ -1,28 +1,81 @@
 # VectorSwift
 
-[![CI Status](http://img.shields.io/travis/David Lee/VectorSwift.svg?style=flat)](https://travis-ci.org/David Lee/VectorSwift)
-[![Version](https://img.shields.io/cocoapods/v/VectorSwift.svg?style=flat)](http://cocoapods.org/pods/VectorSwift)
-[![License](https://img.shields.io/cocoapods/l/VectorSwift.svg?style=flat)](http://cocoapods.org/pods/VectorSwift)
-[![Platform](https://img.shields.io/cocoapods/p/VectorSwift.svg?style=flat)](http://cocoapods.org/pods/VectorSwift)
+## Usage
 
-## Example
+VectorSwift provides a `Vector` protocol which can give any type the power to perform vector operations.
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+Here is a `CGPoint` extension, adopting the `Vector` protocol.
 
-## Requirements
+```swift
+extension CGPoint: Vector {
+	// We need to specify the number of dimensions, so that the vector operations can be configured to fit the dimension.
+	public var numberOfDimensions: Int { return 2 }
+
+	// Every `Vector` can be initialized from a collection. This allows easy conversion among similar vector types.
+	public init<T where T: CollectionType, T.Generator.Element == CGFloat>(collection: T) {
+		var g = collection.generate()
+		guard let x = g.next(), let y = g.next() else {
+			fatalError()
+		}
+		self.init(x: x, y: y)
+	}
+
+	// `Vector` inherits from `CollectionType`, and internally leverages `CollectionType`'s methods for support
+	//   for multi-dimensional vectors.
+	public subscript(index: Int) -> CGFloat {
+		switch index {
+		case 0:
+			return x
+		case 1:
+			return y
+		default:
+			fatalError()
+		}
+	}
+}
+```
+
+Once we define this adoption, we can use all of `Vector`'s operations within `CGPoint`.
+
+```swift
+let pt1 = CGPoint(x: 3, y: 4)
+let pt2 = CGPoint(collection: [1, -2])
+
+pt1.magnitude == 5
+pt1 + pt2 == CGPoint(x: 4, y: 2)
+pt2 * 0.5 == CGPoint(x: 0.5, y: -1)
+-pt1 == CGPoint(x: -4, y: -2)
+```
+
+`Vector` also supports a handful of operations which can combine different kinds of `Vector`s. In the following example, both `CGPoint` and `CGSize` have adopted `Vector`.
+
+```swift
+let point = CGPoint(x: 1, y: -1)
+let size = CGSize(width: 5, height: 10)
+
+let pointDifference: CGPoint = point - size
+let sizeDifference: CGSize = point - size
+
+pointDifference == CGPoint(x: -4, y: -11)
+sizeDifference == CGSize(width: -4, height: -11)
+```
+
+## Running the tests
+
+To run the tests included in the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Installation
 
-VectorSwift is available through [CocoaPods](http://cocoapods.org). To install
+Vector is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "VectorSwift"
+pod "VectorSwift", :git => "https://github.com/davidisaaclee/VectorSwift.git"
 ```
 
 ## Author
 
-David Lee, david@david-lee.net
+David Lee, http://david-lee.net
 
 ## License
 
