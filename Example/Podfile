@@ -1,0 +1,7 @@
+use_frameworks!
+target 'VectorSwift_Tests' do
+  pod 'VectorSwift', :path => '../'
+  
+  pod 'Quick', '~> 0.8'
+  pod 'Nimble', '~> 3.0'
+end
