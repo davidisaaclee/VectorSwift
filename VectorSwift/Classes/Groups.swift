@@ -18,5 +18,5 @@ public protocol Field: Ring, FloatLiteralConvertible {
 	func / (randl: Self, randr: Self) -> Self
 
 	// Not a real field operation...
-	func toThePowerOf(exponent: Self) -> Self
+	func toThePowerOf(_ exponent: Self) -> Self
 }

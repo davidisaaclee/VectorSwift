@@ -7,13 +7,13 @@ import CoreGraphics
 
 
 extension CGPoint: Vector {
-	public static let additionIdentity: CGPoint = CGPointZero
+	public static let additionIdentity: CGPoint = .zero
 	public static let multiplicationIdentity: CGPoint = CGPoint(x: 1, y: 1)
 
 	public var numberOfDimensions: Int { return 2 }
 
-	public init<T where T: CollectionType, T.Generator.Element == CGFloat>(collection: T) {
-		var g = collection.generate()
+	public init<T where T: Collection, T.Iterator.Element == CGFloat>(collection: T) {
+		var g = collection.makeIterator()
 		guard let x = g.next(), let y = g.next() else {
 			fatalError()
 		}
@@ -30,18 +30,22 @@ extension CGPoint: Vector {
 			fatalError()
 		}
 	}
+
+	public func index(after i: Int) -> Int {
+		return i + 1
+	}
 }
 
 extension CGSize: Vector {
 	public typealias Index = Int
 
-	public static let additionIdentity: CGSize = CGSizeZero
-	public static let multiplicationIdentity: CGSize = CGSize(width: 1, height: 1)
+	public static let additionIdentity = CGSize.zero
+	public static let multiplicationIdentity = CGSize(width: 1, height: 1)
 
 	public var numberOfDimensions: Int { return 2 }
 
-	public init<T where T: CollectionType, T.Generator.Element == CGFloat>(collection: T) {
-		var g = collection.generate()
+	public init<T where T: Collection, T.Iterator.Element == CGFloat>(collection: T) {
+		var g = collection.makeIterator()
 		guard let width = g.next(), let height = g.next() else {
 			fatalError()
 		}
@@ -57,5 +61,9 @@ extension CGSize: Vector {
 		default:
 			fatalError()
 		}
+	}
+
+	public func index(after i: Int) -> Int {
+		return i + 1
 	}
 }
