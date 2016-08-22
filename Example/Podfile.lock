@@ -1,34 +1,36 @@
 PODS:
-  - Nimble (3.2.0)
-  - Quick (0.9.1)
+  - Nimble (5.0.0-alpha.30p1)
+  - Quick (0.9.2)
   - VectorSwift (0.1.0)
 
 DEPENDENCIES:
-  - Nimble (from `https://github.com/norio-nomura/Nimble.git`)
-  - Quick (from `https://github.com/norio-nomura/Quick.git`)
+  - Nimble (from `https://github.com/ikesyo/Nimble.git`, branch `swift3-beta-6`)
+  - Quick (from `https://github.com/ikesyo/Quick.git`, branch `xcode8-beta6`)
   - VectorSwift (from `../`)
 
 EXTERNAL SOURCES:
   Nimble:
-    :git: https://github.com/norio-nomura/Nimble.git
+    :branch: swift3-beta-6
+    :git: https://github.com/ikesyo/Nimble.git
   Quick:
-    :git: https://github.com/norio-nomura/Quick.git
+    :branch: xcode8-beta6
+    :git: https://github.com/ikesyo/Quick.git
   VectorSwift:
-    :path: "../"
+    :path: ../
 
 CHECKOUT OPTIONS:
   Nimble:
-    :commit: 918ce7db50c532cdaa6f0cc79c438f612d82b444
-    :git: https://github.com/norio-nomura/Nimble.git
+    :commit: 4f38620db52b81eef4298492fed057247308b5d6
+    :git: https://github.com/ikesyo/Nimble.git
   Quick:
-    :commit: 3a1d88fb81476001c62f086dbd94bb0f5354f1a3
-    :git: https://github.com/norio-nomura/Quick.git
+    :commit: e14bf151a4c864e6f144559e7b7c09bca0fd38c1
+    :git: https://github.com/ikesyo/Quick.git
 
 SPEC CHECKSUMS:
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Quick: a5221fc21788b6aeda934805e68b061839bc3165
+  Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
+  Quick: 19b5d0e23c18c06741e4f4b21b00c3101c78eeca
   VectorSwift: 2d6d83134d89b1e27d796c71deaa607cbfb9e05f
 
-PODFILE CHECKSUM: 072d545a56790c5781645a5fac2415b1374bb8b2
+PODFILE CHECKSUM: 0fe0d880f2291e751b640d3d54d4400c6de0b5e7
 
 COCOAPODS: 1.0.1
