@@ -12,7 +12,7 @@ extension CGPoint: Vector {
 
 	public var numberOfDimensions: Int { return 2 }
 
-	public init<T where T: Collection, T.Iterator.Element == CGFloat>(collection: T) {
+	public init<T: Collection>(collection: T) where T.Iterator.Element == CGFloat {
 		var g = collection.makeIterator()
 		guard let x = g.next(), let y = g.next() else {
 			fatalError()
@@ -44,7 +44,7 @@ extension CGSize: Vector {
 
 	public var numberOfDimensions: Int { return 2 }
 
-	public init<T where T: Collection, T.Iterator.Element == CGFloat>(collection: T) {
+	public init<T: Collection>(collection: T) where T.Iterator.Element == CGFloat {
 		var g = collection.makeIterator()
 		guard let width = g.next(), let height = g.next() else {
 			fatalError()
