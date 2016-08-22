@@ -45,8 +45,8 @@ class CGSizeSpec: QuickSpec {
 				expect(VectorType(collection: [0, 10]).unit).to(equal(VectorType(collection: [0, 1])))
 
 				let u = VectorType(collection: [3, 4]).unit
-				expect(u.width).to(beCloseTo(0.6))
-				expect(u.height).to(beCloseTo(0.8))
+                expect(Float(u.width)).to(beCloseTo(0.6))
+				expect(Float(u.height)).to(beCloseTo(0.8))
 			}
 
 			it("can negate") {

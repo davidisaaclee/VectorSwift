@@ -25,15 +25,8 @@ public protocol Vector: Collection, Ring {
 	/// The negation of this vector, which points in the opposite direction as this vector, with an equal magnitude.
 	var negative: Self { get }
 
-
-	/// Produces a vector by translating this vector by `operand`.
-	func sum(_ operand: Self) -> Self
-
 	/// Produces a vector by translating one vector by another of a similar type.
-	func sum<V: Vector>(_ operand: V) -> Self where V.Iterator.Element == Self.Iterator.Element, V.Iterator.Element == Self.Iterator.Element
-
-	/// Produces a vector by translating one vector by another of a similar type.
-	func sum<V: Vector>(_ operand: V) -> V where V.Iterator.Element == Self.Iterator.Element
+	func sum<V: Vector>(_ operand: V) -> Self where V.Iterator.Element == Self.Iterator.Element
 
 
 	/// Produces a vector by scaling this vector by a scalar.
@@ -50,7 +43,7 @@ public protocol Vector: Collection, Ring {
 	/// Produces a vector by translating one vector by another.
 	static func + (randl: Self, randr: Self) -> Self
 	static func + <V: Vector>(randl: Self, randr: V) -> Self where V.Iterator.Element == Self.Iterator.Element
-	static func + <V: Vector>(randl: Self, randr: V) -> V where V.Iterator.Element == Self.Iterator.Element
+    static func + <V: Vector>(randl: V, randr: Self) -> Self where V.Iterator.Element == Self.Iterator.Element
 
 	/// Produces a vector by scaling a vector by a scalar.
 	static func * (vector: Self, scalar: Self.Iterator.Element) -> Self
@@ -58,13 +51,13 @@ public protocol Vector: Collection, Ring {
 
 	/// Produces a vector by multiplying two vectors piecewise.
 	static func * (lhs: Self, rhs: Self) -> Self
-	static func * <V: Vector>(lhs: Self, rhs: V) -> Self where V.Iterator.Element == Self.Iterator.Element
-	static func * <V: Vector>(lhs: Self, rhs: V) -> V where V.Iterator.Element == Self.Iterator.Element
+	static func * <V: Vector>(randl: Self, randr: V) -> Self where V.Iterator.Element == Self.Iterator.Element
+	static func * <V: Vector>(randl: V, randr: Self) -> Self where V.Iterator.Element == Self.Iterator.Element
 
 	/// Produces a vector by translating the right-hand vector by the negation of the left-hand vector.
 	static func - (randl: Self, randr: Self) -> Self
 	static func - <V: Vector>(randl: Self, randr: V) -> Self where V.Iterator.Element == Self.Iterator.Element
-	static func - <V: Vector>(randl: Self, randr: V) -> V where V.Iterator.Element == Self.Iterator.Element
+	static func - <V: Vector>(randl: V, randr: Self) -> Self where V.Iterator.Element == Self.Iterator.Element
 
 	/// Negates a vector.
 	prefix static func - (rand: Self) -> Self
@@ -98,6 +91,58 @@ public extension Vector {
 	public func makeIterator() -> IndexingIterator<Self> {
 		return IndexingIterator(_elements: self)
 	}
+
+    public static func + (randl: Self, randr: Self) -> Self {
+        return randl.sum(randr)
+    }
+
+    public static func + <V: Vector> (randl: Self, randr: V) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randl.sum(randr)
+    }
+
+    public static func + <V: Vector> (randl: V, randr: Self) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randr.sum(randl)
+    }
+
+
+    public static func * (vector: Self, scalar: Self.Iterator.Element) -> Self {
+        return vector.scale(scalar)
+    }
+
+    public static func * (scalar: Self.Iterator.Element, vector: Self) -> Self {
+        return vector.scale(scalar)
+    }
+
+
+    public static func * (randl: Self, randr: Self) -> Self {
+        return randl.piecewiseMultiply(randr)
+    }
+
+    public static func * <V: Vector> (randl: Self, randr: V) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randl.piecewiseMultiply(randr)
+    }
+
+    public static func * <V: Vector> (randl: V, randr: Self) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randl.piecewiseMultiply(randr)
+    }
+
+
+    public static func - (randl: Self, randr: Self) -> Self {
+        return randl.sum(randr.negative)
+    }
+
+    public static func - <V: Vector> (randl: Self, randr: V) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randl.sum(randr.negative)
+    }
+
+    public static func - <V: Vector> (randl: V, randr: Self) -> Self where Self.Iterator.Element == V.Iterator.Element {
+        return randr.negative.sum(randl)
+    }
+    
+    
+    public static prefix func - (rand: Self) -> Self {
+        return rand.negative
+    }
 }
 
 public extension Vector where Self.Index == Int {
@@ -110,57 +155,7 @@ public extension Vector where Self.Index == Int {
 	}
 }
 
-public func + <V: Vector> (randl: V, randr: V) -> V {
-	return randl.sum(randr)
-}
 
-public func + <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.sum(randr)
-}
-
-public func + <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.sum(randr)
-}
-
-
-public func * <V: Vector> (vector: V, scalar: V.Iterator.Element) -> V {
-	return vector.scale(scalar)
-}
-
-public func * <V: Vector> (scalar: V.Iterator.Element, vector: V) -> V {
-	return vector.scale(scalar)
-}
-
-
-public func * <V: Vector>(randl: V, randr: V) -> V {
-	return randl.piecewiseMultiply(randr)
-}
-
-public func * <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.piecewiseMultiply(randr)
-}
-
-public func * <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.piecewiseMultiply(randr)
-}
-
-
-public func - <V: Vector>(randl: V, randr: V) -> V {
-	return randl.sum(randr.negative)
-}
-
-public func - <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.sum(randr.negative)
-}
-
-public func - <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
-	return randl.sum(randr.negative)
-}
-
-
-public prefix func - <V: Vector>(rand: V) -> V {
-	return rand.negative
-}
 
 
 public extension Vector where Self: Equatable, Self.Iterator.Element: Equatable {}

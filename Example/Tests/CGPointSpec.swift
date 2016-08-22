@@ -55,8 +55,8 @@ class CGPointSpec: QuickSpec {
 				expect(v2.unit).to(equal(VectorType(collection: [0, 1])))
 
 				let u = VectorType(collection: [3, 4]).unit
-				expect(u.x).to(beCloseTo(0.6))
-				expect(u.y).to(beCloseTo(0.8))
+				expect(Float(u.x)).to(beCloseTo(0.6, within: 0.01))
+				expect(Float(u.y)).to(beCloseTo(0.8))
 
 				expect(v1.unit).to(equal(v1.normalized))
 				expect(v2.unit).to(equal(v2.normalized))
@@ -89,7 +89,7 @@ class CGPointSpec: QuickSpec {
 
 				expect(p1.distanceTo(p2)).to(equal(1))
 				expect(p2.distanceTo(p3)).to(equal(1))
-				expect(p1.distanceTo(p2)).to(beCloseTo(pow(1.0, 0.5)))
+				expect(Float(p1.distanceTo(p2))).to(beCloseTo(pow(1.0, 0.5)))
 			}
 		}
 	}
