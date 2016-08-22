@@ -8,7 +8,7 @@ public protocol Vector: Collection, Ring {
 	associatedtype LengthType
 
 	/// Common initializer for vectors, allowing conversion among similar vector types.
-	init<T where T: Collection, T.Iterator.Element == Self.Iterator.Element>(collection: T)
+	init<T>(collection: T) where T: Collection, T.Iterator.Element == Self.Iterator.Element
 
 	/// How many dimensions does this vector have?
 	var numberOfDimensions: Int { get }
@@ -30,10 +30,10 @@ public protocol Vector: Collection, Ring {
 	func sum(_ operand: Self) -> Self
 
 	/// Produces a vector by translating one vector by another of a similar type.
-	func sum<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ operand: V) -> Self
+	func sum<V: Vector>(_ operand: V) -> Self where V.Iterator.Element == Self.Iterator.Element, V.Iterator.Element == Self.Iterator.Element
 
 	/// Produces a vector by translating one vector by another of a similar type.
-	func sum<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ operand: V) -> V
+	func sum<V: Vector>(_ operand: V) -> V where V.Iterator.Element == Self.Iterator.Element
 
 
 	/// Produces a vector by scaling this vector by a scalar.
@@ -41,33 +41,33 @@ public protocol Vector: Collection, Ring {
 
 	/// Produces a vector by performing a piecewise multiplication of this vector by another vector.
 	func piecewiseMultiply(_ vector: Self) -> Self
-	func piecewiseMultiply<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ vector: V) -> Self
-	func piecewiseMultiply<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ vector: V) -> V
+	func piecewiseMultiply<V: Vector>(_ vector: V) -> Self where V.Iterator.Element == Self.Iterator.Element
+	func piecewiseMultiply<V: Vector>(_ vector: V) -> V where V.Iterator.Element == Self.Iterator.Element
 
 
 	// MARK: - Methods with default implementations
 
 	/// Produces a vector by translating one vector by another.
-	func + (randl: Self, randr: Self) -> Self
-	func + <V: Vector where V.Iterator.Element == Self.Iterator.Element>(randl: Self, randr: V) -> Self
-	func + <V: Vector where V.Iterator.Element == Self.Iterator.Element>(randl: Self, randr: V) -> V
+	static func + (randl: Self, randr: Self) -> Self
+	static func + <V: Vector>(randl: Self, randr: V) -> Self where V.Iterator.Element == Self.Iterator.Element
+	static func + <V: Vector>(randl: Self, randr: V) -> V where V.Iterator.Element == Self.Iterator.Element
 
 	/// Produces a vector by scaling a vector by a scalar.
-	func * (vector: Self, scalar: Self.Iterator.Element) -> Self
-	func * (scalar: Self.Iterator.Element, vector: Self) -> Self
+	static func * (vector: Self, scalar: Self.Iterator.Element) -> Self
+	static func * (scalar: Self.Iterator.Element, vector: Self) -> Self
 
 	/// Produces a vector by multiplying two vectors piecewise.
-	func * (lhs: Self, rhs: Self) -> Self
-	func * <V: Vector where V.Iterator.Element == Self.Iterator.Element>(lhs: Self, rhs: V) -> Self
-	func * <V: Vector where V.Iterator.Element == Self.Iterator.Element>(lhs: Self, rhs: V) -> V
+	static func * (lhs: Self, rhs: Self) -> Self
+	static func * <V: Vector>(lhs: Self, rhs: V) -> Self where V.Iterator.Element == Self.Iterator.Element
+	static func * <V: Vector>(lhs: Self, rhs: V) -> V where V.Iterator.Element == Self.Iterator.Element
 
 	/// Produces a vector by translating the right-hand vector by the negation of the left-hand vector.
-	func - (randl: Self, randr: Self) -> Self
-	func - <V: Vector where V.Iterator.Element == Self.Iterator.Element>(randl: Self, randr: V) -> Self
-	func - <V: Vector where V.Iterator.Element == Self.Iterator.Element>(randl: Self, randr: V) -> V
+	static func - (randl: Self, randr: Self) -> Self
+	static func - <V: Vector>(randl: Self, randr: V) -> Self where V.Iterator.Element == Self.Iterator.Element
+	static func - <V: Vector>(randl: Self, randr: V) -> V where V.Iterator.Element == Self.Iterator.Element
 
 	/// Negates a vector.
-	prefix func - (rand: Self) -> Self
+	prefix static func - (rand: Self) -> Self
 }
 
 
@@ -86,7 +86,7 @@ public extension Vector {
 		return (vector - self).magnitude
 	}
 
-	public func distanceTo<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ vector: V) -> Self.LengthType {
+	public func distanceTo<V: Vector>(_ vector: V) -> Self.LengthType where V.Iterator.Element == Self.Iterator.Element {
 		return self.distanceTo(Self(collection: vector))
 	}
 }
@@ -114,11 +114,11 @@ public func + <V: Vector> (randl: V, randr: V) -> V {
 	return randl.sum(randr)
 }
 
-public func + <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V1 {
+public func + <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.sum(randr)
 }
 
-public func + <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V2 {
+public func + <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.sum(randr)
 }
 
@@ -136,11 +136,11 @@ public func * <V: Vector>(randl: V, randr: V) -> V {
 	return randl.piecewiseMultiply(randr)
 }
 
-public func * <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V1 {
+public func * <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.piecewiseMultiply(randr)
 }
 
-public func * <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V2 {
+public func * <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.piecewiseMultiply(randr)
 }
 
@@ -149,11 +149,11 @@ public func - <V: Vector>(randl: V, randr: V) -> V {
 	return randl.sum(randr.negative)
 }
 
-public func - <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V1 {
+public func - <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V1 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.sum(randr.negative)
 }
 
-public func - <V1: Vector, V2: Vector where V1.Iterator.Element == V2.Iterator.Element> (randl: V1, randr: V2) -> V2 {
+public func - <V1: Vector, V2: Vector> (randl: V1, randr: V2) -> V2 where V1.Iterator.Element == V2.Iterator.Element {
 	return randl.sum(randr.negative)
 }
 
@@ -164,7 +164,7 @@ public prefix func - <V: Vector>(rand: V) -> V {
 
 
 public extension Vector where Self: Equatable, Self.Iterator.Element: Equatable {}
-public func == <V: Vector where V.Iterator.Element: Equatable>(lhs: V, rhs: V) -> Bool {
+public func == <V: Vector>(lhs: V, rhs: V) -> Bool where V.Iterator.Element: Equatable {
 	if lhs.count != rhs.count {
 		return false
 	}
@@ -179,30 +179,30 @@ public func == <V: Vector where V.Iterator.Element: Equatable>(lhs: V, rhs: V) -
 
 public extension Vector where Self.Iterator.Element: Ring {
 	public func sum(_ operand: Self) -> Self {
-		return self.dynamicType.init(collection: Array(zip(self, operand).map { $0 + $1 }))
+		return type(of: self).init(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
-	public func sum<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ operand: V) -> Self {
-		return self.dynamicType.init(collection: Array(zip(self, operand).map { $0 + $1 }))
+	public func sum<V: Vector>(_ operand: V) -> Self where V.Iterator.Element == Self.Iterator.Element {
+		return type(of: self).init(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
-	public func sum<V: Vector where V.Iterator.Element == Self.Iterator.Element>(_ operand: V) -> V {
+	public func sum<V: Vector>(_ operand: V) -> V where V.Iterator.Element == Self.Iterator.Element {
 		return V(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
 	public func scale(_ scalar: Self.Iterator.Element) -> Self {
-		return self.dynamicType.init(collection: self.map { $0 * scalar })
+		return type(of: self).init(collection: self.map { $0 * scalar })
 	}
 
 	public func piecewiseMultiply(_ vector: Self) -> Self {
 		return Self(collection: zip(self, vector).map { (lhs, rhs) in lhs * rhs })
 	}
 
-	public func piecewiseMultiply <V: Vector where V.Iterator.Element == Self.Iterator.Element> (_ vector: V) -> Self {
+	public func piecewiseMultiply <V: Vector> (_ vector: V) -> Self where V.Iterator.Element == Self.Iterator.Element {
 		return Self(collection: zip(self, vector).map { (lhs, rhs) in lhs * rhs })
 	}
 
-	public func piecewiseMultiply <V: Vector where V.Iterator.Element == Self.Iterator.Element> (_ vector: V) -> V {
+	public func piecewiseMultiply <V: Vector> (_ vector: V) -> V where V.Iterator.Element == Self.Iterator.Element {
 		return V(collection: zip(self, vector).map { (lhs, rhs) in lhs * rhs })
 	}
 
@@ -217,7 +217,7 @@ public extension Vector where Iterator.Element: Field, LengthType == Self.Iterat
 	}
 
 	public var unit: Self {
-		return self * (self.dynamicType.LengthType.multiplicationIdentity / self.magnitude)
+		return self * (type(of: self).LengthType.multiplicationIdentity / self.magnitude)
 	}
 
 	public var negative: Self {
