@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "VectorSwift"
-  s.version          = "0.1.1"
+  s.version          = "0.1.2"
   s.summary          = "Powerful vector operations for the types you're already using."
 
 # This description is used to generate tags and improve search results.
