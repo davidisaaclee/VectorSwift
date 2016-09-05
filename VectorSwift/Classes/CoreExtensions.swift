@@ -7,6 +7,9 @@ import CoreGraphics
 
 
 extension CGPoint: Vector {
+	public typealias Scalar = CGFloat
+	public typealias LengthType = CGFloat
+
 	public static let additionIdentity: CGPoint = .zero
 	public static let multiplicationIdentity: CGPoint = CGPoint(x: 1, y: 1)
 
@@ -37,6 +40,9 @@ extension CGPoint: Vector {
 }
 
 extension CGSize: Vector {
+	public typealias Scalar = CGFloat
+	public typealias LengthType = CGFloat
+
 	public typealias Index = Int
 
 	public static let additionIdentity = CGSize.zero
