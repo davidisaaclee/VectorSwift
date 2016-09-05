@@ -176,19 +176,19 @@ public func == <V: Vector>(lhs: V, rhs: V) -> Bool where V.Scalar: Equatable {
 
 public extension Vector where Self.Iterator.Element: Ring {
 	public func sum(_ operand: Self) -> Self {
-		return type(of: self).init(collection: Array(zip(self, operand).map { $0 + $1 }))
+		return Self(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
-	public func sum<V: Vector>(_ operand: V) -> Self where V.Iterator.Element == Self.Iterator.Element {
-		return type(of: self).init(collection: Array(zip(self, operand).map { $0 + $1 }))
+	public func sum<V: Vector>(_ operand: V) -> Self where V.Scalar == Self.Scalar {
+		return Self(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
 	public func sum<V: Vector>(_ operand: V) -> V where V.Scalar == Self.Scalar {
 		return V(collection: Array(zip(self, operand).map { $0 + $1 }))
 	}
 
-	public func scale(_ scalar: Self.Iterator.Element) -> Self {
-		return type(of: self).init(collection: self.map { $0 * scalar })
+	public func scale(_ scalar: Scalar) -> Self {
+		return Self(collection: self.map { $0 * scalar })
 	}
 
 	public func piecewiseMultiply(_ vector: Self) -> Self {
@@ -214,7 +214,7 @@ public extension Vector where Iterator.Element: Field, LengthType == Self.Iterat
 	}
 
 	public var unit: Self {
-		return self * (type(of: self).LengthType.multiplicationIdentity / self.magnitude)
+		return self * (LengthType.multiplicationIdentity / self.magnitude)
 	}
 
 	public var negative: Self {
