@@ -1,6 +1,6 @@
 {
   "name": "Quick",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "summary": "The Swift (and Objective-C) testing framework.",
   "description": "Quick is a behavior-driven development framework for Swift and Objective-C. Inspired by RSpec, Specta, and Ginkgo.",
   "homepage": "https://github.com/Quick/Quick",
@@ -16,14 +16,14 @@
   },
   "source": {
     "git": "https://github.com/Quick/Quick.git",
-    "tag": "v0.9.1"
+    "tag": "v0.9.2"
   },
-  "source_files": "Sources/Quick/**/*.{swift,h,m}",
+  "source_files": "Sources/**/*.{swift,h,m}",
   "public_header_files": [
-    "Sources/Quick/Configuration/QuickConfiguration.h",
-    "Sources/Quick/DSL/QCKDSL.h",
-    "Sources/Quick/Quick.h",
-    "Sources/Quick/QuickSpec.h"
+    "Sources/QuickObjectiveC/Configuration/QuickConfiguration.h",
+    "Sources/QuickObjectiveC/DSL/QCKDSL.h",
+    "Sources/QuickObjectiveC/Quick.h",
+    "Sources/QuickObjectiveC/QuickSpec.h"
   ],
   "exclude_files": [
     "Sources/Quick/Configuration/QuickConfiguration.swift",
@@ -32,6 +32,9 @@
   ],
   "frameworks": "XCTest",
   "requires_arc": true,
+  "user_target_xcconfig": {
+    "FRAMEWORK_SEARCH_PATHS": "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+  },
   "pod_target_xcconfig": {
     "ENABLE_BITCODE": "NO"
   }
