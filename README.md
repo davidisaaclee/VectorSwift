@@ -8,20 +8,28 @@ Here is a `CGPoint` extension, adopting the `Vector` protocol.
 
 ```swift
 extension CGPoint: Vector {
-	// We need to specify the number of dimensions, so that the vector operations can be configured to fit the dimension.
+	// What is the CGPoint `i` which, when added to any other CGPoint `p`, produces `p`?
+	public static let additionIdentity: CGPoint = .zero
+	
+	// What is the CGPoint `i` which, when multiplied with any other CGPoint `p`, produces `p`?
+	public static let multiplicationIdentity: CGPoint = CGPoint(x: 1, y: 1)
+
+	// We need to specify the number of dimensions, so that the vector operations can be configured
+	// to fit the dimension.
 	public var numberOfDimensions: Int { return 2 }
 
-	// Every `Vector` can be initialized from a collection. This allows easy conversion among similar vector types.
-	public init<T where T: CollectionType, T.Generator.Element == CGFloat>(collection: T) {
-		var g = collection.generate()
+	// Every `Vector` can be initialized from a collection. This allows easy conversion among similar
+	// vector types.
+	public init<T: Collection>(collection: T) where T.Iterator.Element == CGFloat {
+		var g = collection.makeIterator()
 		guard let x = g.next(), let y = g.next() else {
 			fatalError()
 		}
 		self.init(x: x, y: y)
 	}
 
-	// `Vector` inherits from `CollectionType`, and internally leverages `CollectionType`'s methods for support
-	//   for multi-dimensional vectors.
+	// `Vector` inherits from `Collection`, and internally leverages `Collection`'s methods for supporting
+	// multi-dimensional vectors.
 	public subscript(index: Int) -> CGFloat {
 		switch index {
 		case 0:
@@ -31,6 +39,10 @@ extension CGPoint: Vector {
 		default:
 			fatalError()
 		}
+	}
+
+	public func index(after i: Int) -> Int {
+		return i + 1
 	}
 }
 ```
