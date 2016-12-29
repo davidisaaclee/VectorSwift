@@ -62,7 +62,9 @@ sizeDifference == CGSize(width: -4, height: -11)
 
 ## Running the tests
 
-To run the tests included in the example project, clone the repo, and run `pod install` from the Example directory first.
+~~To run the tests included in the example project, clone the repo, and run `pod install` from the Example directory first.~~
+
+Test frameworks need to be updated to Swift 3 :(
 
 ## Installation
 
