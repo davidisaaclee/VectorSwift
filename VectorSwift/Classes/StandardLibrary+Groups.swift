@@ -5,7 +5,7 @@ extension CGFloat: Field {
 	public static let additionIdentity: CGFloat = 0
 	public static let multiplicationIdentity: CGFloat = 1
 
-	public func toThePowerOf(exponent: CGFloat) -> CGFloat {
+	public func toThePowerOf(_ exponent: CGFloat) -> CGFloat {
 		return pow(self, exponent)
 	}
 }

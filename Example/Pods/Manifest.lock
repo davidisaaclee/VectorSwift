@@ -1,0 +1,36 @@
+PODS:
+  - Nimble (5.0.0-alpha.30p1)
+  - Quick (0.9.2)
+  - VectorSwift (0.1.1)
+
+DEPENDENCIES:
+  - Nimble (from `https://github.com/ikesyo/Nimble.git`, branch `swift3-beta-6`)
+  - Quick (from `https://github.com/ikesyo/Quick.git`, branch `xcode8-beta6`)
+  - VectorSwift (from `../`)
+
+EXTERNAL SOURCES:
+  Nimble:
+    :branch: swift3-beta-6
+    :git: https://github.com/ikesyo/Nimble.git
+  Quick:
+    :branch: xcode8-beta6
+    :git: https://github.com/ikesyo/Quick.git
+  VectorSwift:
+    :path: ../
+
+CHECKOUT OPTIONS:
+  Nimble:
+    :commit: 4f38620db52b81eef4298492fed057247308b5d6
+    :git: https://github.com/ikesyo/Nimble.git
+  Quick:
+    :commit: e14bf151a4c864e6f144559e7b7c09bca0fd38c1
+    :git: https://github.com/ikesyo/Quick.git
+
+SPEC CHECKSUMS:
+  Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
+  Quick: 19b5d0e23c18c06741e4f4b21b00c3101c78eeca
+  VectorSwift: 894d17b50a09a30063b1088b24bed07dd515681a
+
+PODFILE CHECKSUM: 50dc14f40a084053f96f92061332c19e8c06ca5b
+
+COCOAPODS: 1.0.1

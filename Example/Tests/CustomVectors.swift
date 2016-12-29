@@ -14,7 +14,7 @@ extension Float: Field {
 	public static let additionIdentity: Float = 0
 	public static let multiplicationIdentity: Float = 1
 
-	public func toThePowerOf(exponent: Float) -> Float {
+	public func toThePowerOf(_ exponent: Float) -> Float {
 		return powf(self, exponent)
 	}
 }
@@ -29,8 +29,8 @@ public final class CustomVector2 {
 		self.y = y
 	}
 
-	public convenience init<T where T: CollectionType, T.Generator.Element == Float>(collection: T) {
-		var g = collection.generate()
+	public convenience init<T>(collection: T) where T: Collection, T.Iterator.Element == Float {
+		var g = collection.makeIterator()
 		guard let x = g.next(), let y = g.next() else {
 			fatalError()
 		}
@@ -56,6 +56,10 @@ extension CustomVector2: Vector {
 			fatalError()
 		}
 	}
+
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
 }
 
 extension CustomVector2: Equatable {}
@@ -72,9 +76,9 @@ public struct CustomVector3 {
 		self.z = z
 	}
 
-	public init<T where T: CollectionType, T.Generator.Element == Float>(collection: T) {
-		var g = collection.generate()
-		guard let x = g.next(), let y = g.next(), let z = g.next() else {
+	public init<T: Collection>(collection: T) where T.Iterator.Element == Float {
+		var it = collection.makeIterator()
+		guard let x = it.next(), let y = it.next(), let z = it.next() else {
 			fatalError()
 		}
 		self.init(x: x, y: y, z: z)
@@ -101,6 +105,10 @@ extension CustomVector3: Vector {
 			fatalError()
 		}
 	}
+
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
 }
 
 extension CustomVector3: Equatable {}
